@@ -901,8 +901,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // 启动应用
-    initApp();
+    // 包装初始化函数供密码验证后调用
+    window.initAdminSystem = initApp;
 
     // 键盘快捷键
     document.addEventListener('keydown', function(e) {
