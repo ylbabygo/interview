@@ -65,21 +65,41 @@ document.addEventListener('DOMContentLoaded', function() {
             try {
                 showLoading(true);
 
-                // 实际部署时替换为真实的API调用
-                // const response = await fetch('https://your-api-endpoint.com/api/registrations');
-                // const data = await response.json();
+                console.log('正在从Supabase获取数据...');
 
-                // 模拟API调用延迟
-                await new Promise(resolve => setTimeout(resolve, 1000));
+                // 从Supabase获取数据
+                const { data, error } = await window.supabaseClient
+                    .from('registrations')
+                    .select('*')
+                    .order('submit_time', { ascending: false });
 
-                // 使用模拟数据
-                const data = this.loadMockData();
+                if (error) {
+                    console.error('Supabase获取数据错误:', error);
+                    throw error;
+                }
+
+                console.log('Supabase获取数据成功:', data);
+
+                // 如果没有数据，使用模拟数据作为演示
+                if (!data || data.length === 0) {
+                    console.log('数据库暂无数据，使用模拟数据');
+                    return this.loadMockData();
+                }
 
                 return data;
 
             } catch (error) {
                 console.error('获取数据失败:', error);
-                throw error;
+                // 如果Supabase失败，尝试从本地存储获取
+                const localStorageData = this.getFromLocalStorage();
+                if (localStorageData.length > 0) {
+                    console.log('Supabase连接失败，使用本地存储数据');
+                    return localStorageData;
+                }
+
+                // 最后的备用方案：使用模拟数据
+                console.log('使用模拟数据');
+                return this.loadMockData();
             } finally {
                 showLoading(false);
             }
@@ -737,19 +757,33 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!this.pendingDeleteId) return;
 
             try {
-                // 从数据中删除记录
+                // 找到要删除的记录
+                const itemToDelete = this.dataManager.allData.find(item => item.id === this.pendingDeleteId);
+                if (!itemToDelete) {
+                    showErrorMessage('未找到要删除的记录');
+                    return;
+                }
+
+                console.log('正在删除Supabase记录:', itemToDelete);
+
+                // 从Supabase删除记录
+                const { error } = await window.supabaseClient
+                    .from('registrations')
+                    .delete()
+                    .eq('id', this.pendingDeleteId);
+
+                if (error) {
+                    console.error('Supabase删除失败:', error);
+                    throw error;
+                }
+
+                console.log('Supabase删除成功');
+
+                // 从本地数据中删除记录
                 const index = this.dataManager.allData.findIndex(item => item.id === this.pendingDeleteId);
                 if (index !== -1) {
                     const deletedItem = this.dataManager.allData[index];
                     this.dataManager.allData.splice(index, 1);
-
-                    // 重新分配ID
-                    this.dataManager.allData.forEach((item, idx) => {
-                        item.id = idx + 1;
-                    });
-
-                    // 更新本地存储
-                    this.updateLocalStorage();
 
                     // 重新应用筛选和渲染
                     this.applyFiltersAndRender();

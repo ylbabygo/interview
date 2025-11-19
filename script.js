@@ -117,33 +117,35 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // 提交数据到后端（模拟）
+    // 提交数据到Supabase
     async function submitData(data) {
-        // 实际部署时需要替换为真实的API端点
-        const apiUrl = 'https://your-api-endpoint.com/api/registration';
-
         try {
-            // 模拟网络延迟
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            console.log('正在提交数据到Supabase:', data);
 
-            // 这里应该是真实的API调用
-            // const response = await fetch(apiUrl, {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            //     body: JSON.stringify(data)
-            // });
+            // 提交到Supabase数据库
+            const { data: result, error } = await window.supabaseClient
+                .from('registrations')
+                .insert([{
+                    user_name: data.user_name,
+                    selected_slot: data.selected_slot,
+                    ip_address: data.ip_address
+                }])
+                .select();
 
-            // if (!response.ok) {
-            //     throw new Error('提交失败');
-            // }
+            if (error) {
+                console.error('Supabase错误:', error);
+                throw error;
+            }
 
-            // 模拟成功响应
-            return { success: true, message: '提交成功' };
+            console.log('Supabase提交成功:', result);
+            return { success: true, message: '提交成功', data: result };
 
         } catch (error) {
             console.error('提交错误:', error);
+
+            // 如果Supabase失败，保存到本地存储作为备份
+            saveToLocalStorage(data);
+
             throw error;
         }
     }
