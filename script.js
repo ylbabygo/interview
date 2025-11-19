@@ -1,5 +1,24 @@
 // 51talk 用户访谈会邀请函 - JavaScript 交互逻辑
-document.addEventListener('DOMContentLoaded', function() {
+// 添加兼容性检查
+if (typeof window === 'undefined') {
+    console.error('window对象不存在');
+} else {
+    // 检查必要的浏览器特性
+    if (!window.localStorage) {
+        console.warn('localStorage不支持，部分功能可能受限');
+    }
+}
+
+// 安全的DOMContentLoaded监听器
+function ready(callback) {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', callback);
+    } else {
+        callback();
+    }
+}
+
+ready(function() {
 
     // DOM 元素获取
     const form = document.getElementById('invitationForm');

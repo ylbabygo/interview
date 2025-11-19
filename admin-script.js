@@ -1,5 +1,21 @@
 // 51talk 用户访谈会后台管理系统
-document.addEventListener('DOMContentLoaded', function() {
+// 添加兼容性检查
+if (typeof window === 'undefined') {
+    console.error('window对象不存在，后台管理无法运行');
+} else if (!window.supabase) {
+    console.error('Supabase客户端未加载');
+}
+
+// 安全的DOMContentLoaded监听器
+function ready(callback) {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', callback);
+    } else {
+        callback();
+    }
+}
+
+ready(function() {
 
     // 数据管理类
     class DataManager {
