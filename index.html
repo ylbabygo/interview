@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>51talk 用户访谈会诚挚邀请</title>
+
+    <!-- 微信分享配置 -->
+    <meta property="og:title" content="51talk 用户访谈会诚挚邀请">
+    <meta property="og:description" content="期待您的参与，共创更好产品体验">
+    <meta property="og:image" content="./logo.png">
+    <meta name="description" content="51talk诚挚邀请您参加用户访谈会，共同优化产品体验，更有800元访谈酬金等待您。">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 顶部Logo和标题区域 -->
+    <header class="header">
+        <div class="header-content">
+            <img src="logo.png" alt="51talk Logo" class="logo">
+            <h1 class="page-title">用户访谈会邀请函</h1>
+        </div>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main class="main-content">
+
+        <!-- 邀请寄语模块 -->
+        <section class="invitation-message">
+            <div class="section-card cute-card">
+                <div class="cute-icon">✨</div>
+                <h2 class="section-title">诚邀您来参加</h2>
+                <div class="message-content">
+                    <p>您作为我们的<b>超级用户</b>，您的想法和创意对我们超级重要！快来和我们一起聊聊，让课程变得更棒吧！💪</p>
+                </div>
+                <div class="decoration-stars">
+                    <span class="star">⭐</span>
+                    <span class="star">⭐</span>
+                    <span class="star">⭐</span>
+                </div>
+            </div>
+        </section>
+
+        
+        <!-- 活动信息模块 -->
+        <section class="event-info">
+            <div class="section-card">
+                <h2 class="section-title">活动详情</h2>
+
+                <div class="info-item">
+                    <div class="info-icon">📅</div>
+                    <div class="info-content">
+                        <h4>活动日期</h4>
+                        <p>2025年11月29日 (周六)</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">📍</div>
+                    <div class="info-content">
+                        <h4>活动地点</h4>
+                        <p>北京市朝阳区东大桥路8号尚都国际中心A座2808</p>
+                        <a href="https://j.map.baidu.com/fc/dcN" target="_blank" class="nav-button">
+                            <span class="nav-icon">🗺️</span>
+                            <span class="nav-text">立即导航</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 报名表单模块 -->
+        <section class="registration-form">
+            <div class="form-card">
+                <h2 class="section-title">接受邀请</h2>
+
+                <form id="invitationForm" class="form">
+                    <div class="form-group">
+                        <label for="userName" class="form-label">您的称呼 *</label>
+                        <input
+                            type="text"
+                            id="userName"
+                            name="userName"
+                            class="form-input"
+                            placeholder="请输入您的称呼（如：王女士/李先生）"
+                            required
+                        >
+                        <span class="error-message" id="nameError">请输入您的称呼</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">参会时间段 *</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="timeSlot" value="AM" required>
+                                <span class="radio-custom"></span>
+                                <span class="radio-text">11月29日 上午 9:30-11:30</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="timeSlot" value="PM" required>
+                                <span class="radio-custom"></span>
+                                <span class="radio-text">11月29日 下午 14:00-16:00</span>
+                            </label>
+                        </div>
+                        <span class="error-message" id="timeSlotError">请选择参会时间段</span>
+                    </div>
+
+                    <button type="submit" class="submit-btn cute-btn" id="submitBtn">
+                        <span class="btn-text">我要参加 ✨</span>
+                        <span class="btn-loading" style="display: none;">
+                            <span class="loading-spinner"></span>
+                            提交中...
+                        </span>
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- 成功提交弹窗 -->
+    <div class="modal-overlay" id="successModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="success-icon">✓</div>
+                <h3>报名成功！期待您的到来</h3>
+            </div>
+            <div class="modal-body">
+                <div class="success-reward">
+                    <div class="reward-icon">💝</div>
+                    <div class="reward-text">
+                        <p class="reward-title">感谢您的参与！</p>
+                        <p class="reward-amount">将获得 <strong>800元</strong> 感谢金 🎁</p>
+                    </div>
+                </div>
+                <div class="confirmation-info">
+                    <div class="info-row">
+                        <span class="info-label">您的称呼：</span>
+                        <span class="info-value" id="confirmName">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">您的场次：</span>
+                        <span class="info-value" id="confirmTime">-</span>
+                    </div>
+                </div>
+                <div class="reminder-text">
+                    <p>温馨提示：请您截图保存此页面，届时凭此信息签到。</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn" id="closeModal">我知道了</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

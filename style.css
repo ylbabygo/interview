@@ -1,0 +1,850 @@
+/* 重置和基础样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    background: linear-gradient(135deg, #fff5e6 0%, #fff9f0 50%, #fffaf5 100%);
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding-bottom: env(safe-area-inset-bottom);
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* 背景装饰 */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(circle at 20% 20%, rgba(255, 193, 7, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 152, 0, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 40% 70%, rgba(255, 140, 0, 0.15) 0%, transparent 50%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* 漂浮的小装饰 */
+body::after {
+    content: '⭐ 🌟 ✨ 💫 🎈 🎀 🍀 🎉';
+    position: fixed;
+    top: 10%;
+    left: 5%;
+    font-size: 20px;
+    color: rgba(255, 152, 0, 0.2);
+    z-index: -1;
+    animation: float 15s ease-in-out infinite;
+}
+
+/* 顶部Logo和标题区域 */
+.header {
+    background: linear-gradient(135deg, #FF6B00 0%, #FF8C00 50%, #FFA500 100%);
+    padding: 20px 0 30px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0 0 30px 30px;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="80" cy="20" r="30" fill="rgba(255,255,255,0.1)"/><circle cx="20" cy="80" r="20" fill="rgba(255,255,255,0.08)"/></svg>');
+    background-size: 200px 200px;
+}
+
+.header-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.logo {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    background: white;
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.page-title {
+    color: white;
+    font-size: 22px;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    margin: 0;
+}
+
+/* 主要内容区域 */
+.main-content {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+/* 卡片基础样式 */
+.section-card,
+.form-card,
+.reward-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(255, 107, 0, 0.08);
+    margin: 16px 0;
+    overflow: hidden;
+    border: 1px solid rgba(255, 107, 0, 0.1);
+}
+
+/* 邀请寄语模块 */
+.invitation-message {
+    margin-top: -15px;
+    position: relative;
+    z-index: 3;
+}
+
+/* 可爱卡片样式 */
+.cute-card {
+    background: linear-gradient(135deg, #ffffff 0%, #fff8e6 50%, #fffbf0 100%);
+    border: 3px solid #FFA500;
+    border-radius: 20px;
+    padding: 24px;
+    position: relative;
+    box-shadow: 0 8px 24px rgba(255, 165, 0, 0.15);
+    overflow: hidden;
+}
+
+.cute-card::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(45deg, #FFA500, #FF8C00);
+    border-radius: 50%;
+    opacity: 0.1;
+    animation: pulse 3s ease-in-out infinite;
+}
+
+.cute-icon {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 16px;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+.decoration-stars {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.star {
+    font-size: 20px;
+    color: #FFA500;
+    animation: twinkle 2s ease-in-out infinite;
+}
+
+.star:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.star:nth-child(3) {
+    animation-delay: 1s;
+}
+
+.section-card {
+    padding: 24px;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.98);
+}
+
+.section-title {
+    color: #FF6B00;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    text-align: center;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, #FF6B00, #FFC107);
+    border-radius: 1px;
+}
+
+.message-content p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #555;
+    text-align: justify;
+}
+
+.message-content strong {
+    color: #FF6B00;
+    font-weight: 600;
+    font-size: 17px;
+}
+
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.reward-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.reward-title {
+    color: #D2691E;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+
+/* 活动信息模块 */
+.event-info .section-card {
+    padding: 24px;
+}
+
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+
+.info-item:last-child {
+    margin-bottom: 0;
+}
+
+.info-icon {
+    font-size: 24px;
+    margin-right: 16px;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.info-content h4 {
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.info-content p {
+    color: #666;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* 导航按钮 */
+.nav-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #FF8C00 0%, #FF6B00 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(255, 140, 0, 0.3);
+    border: 2px solid transparent;
+}
+
+.nav-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 140, 0, 0.4);
+    background: linear-gradient(135deg, #FF6B00 0%, #FF8C00 100%);
+}
+
+.nav-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(255, 140, 0, 0.3);
+}
+
+.nav-icon {
+    font-size: 18px;
+}
+
+.nav-text {
+    white-space: nowrap;
+}
+
+/* 报名表单模块 */
+.registration-form {
+    margin-bottom: 32px;
+}
+
+.form-card {
+    padding: 24px;
+}
+
+.form {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-label {
+    display: block;
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 16px;
+    border: 2px solid #e5e5e5;
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    background: #fafafa;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #FF6B00;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(255, 107, 0, 0.1);
+}
+
+.form-input.error {
+    border-color: #ff4757;
+    background: #fff5f5;
+}
+
+/* 单选按钮组 */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 16px;
+    border: 2px solid #e5e5e5;
+    border-radius: 12px;
+    background: #fafafa;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.radio-option:hover {
+    border-color: #FFC107;
+    background: #fffbf0;
+}
+
+.radio-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.radio-custom {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    margin-right: 12px;
+    position: relative;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.radio-option input[type="radio"]:checked + .radio-custom {
+    border-color: #FF6B00;
+    background: #FF6B00;
+}
+
+.radio-option input[type="radio"]:checked + .radio-custom::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+}
+
+.radio-text {
+    font-size: 15px;
+    color: #333;
+    line-height: 1.4;
+}
+
+.radio-option input[type="radio"]:checked ~ .radio-text {
+    color: #FF6B00;
+    font-weight: 500;
+}
+
+/* 错误信息 */
+.error-message {
+    color: #ff4757;
+    font-size: 14px;
+    margin-top: 8px;
+    display: none;
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.error-message.show {
+    display: block;
+}
+
+/* 提交按钮 */
+.submit-btn {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, #FF6B00 0%, #FF8C00 50%, #FFA500 100%);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(255, 140, 0, 0.3);
+    border: 3px solid transparent;
+}
+
+.cute-btn::before {
+    content: '💫';
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    font-size: 20px;
+    animation: float 3s ease-in-out infinite;
+}
+
+.cute-btn::after {
+    content: '💫';
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    font-size: 20px;
+    animation: float 3s ease-in-out infinite 1.5s;
+}
+
+.submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(255, 140, 0, 0.4);
+    background: linear-gradient(135deg, #FF8C00 0%, #FF6B00 50%, #FFA500 100%);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 16px rgba(255, 140, 0, 0.3);
+}
+
+.submit-btn:disabled {
+    background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 4px 12px rgba(255, 165, 0, 0.2);
+    opacity: 0.7;
+}
+
+.btn-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.loading-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 成功弹窗 */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+    backdrop-filter: blur(4px);
+}
+
+.success-reward {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: linear-gradient(135deg, #fff8e6 0%, #fffbf0 100%);
+    border: 2px solid #FFA500;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(255, 165, 0, 0.15);
+}
+
+.reward-icon {
+    font-size: 40px;
+    animation: heartbeat 2s ease-in-out infinite;
+}
+
+.reward-text {
+    flex: 1;
+}
+
+.reward-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 8px 0;
+}
+
+.reward-amount {
+    font-size: 16px;
+    color: #FF6B00;
+    margin: 0;
+}
+
+.reward-amount strong {
+    color: #FF6B00;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 400px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideUp 0.4s ease-out;
+}
+
+@keyframes modalSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #00b894 0%, #00d2d3 100%);
+    color: white;
+    padding: 24px;
+    text-align: center;
+}
+
+.success-icon {
+    width: 48px;
+    height: 48px;
+    background: white;
+    color: #00b894;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    font-size: 24px;
+    font-weight: 700;
+    animation: successPop 0.6s ease-out;
+}
+
+@keyframes successPop {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.modal-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.modal-body {
+    padding: 24px;
+}
+
+.confirmation-info {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    color: #666;
+    font-size: 14px;
+}
+
+.info-value {
+    color: #333;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.reminder-text {
+    text-align: center;
+    color: #ff6b6b;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 12px;
+    background: #fff5f5;
+    border-radius: 8px;
+    border: 1px solid #ffe0e0;
+}
+
+.modal-footer {
+    padding: 0 24px 24px;
+}
+
+.modal-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #00b894 0%, #00d2d3 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.modal-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(0, 184, 148, 0.3);
+}
+
+/* 响应式设计 */
+@media (min-width: 768px) {
+    .main-content {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .page-title {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 375px) {
+    .logo {
+        width: 50px;
+        height: 50px;
+    }
+
+    .page-title {
+        font-size: 20px;
+        padding-left: 60px;
+    }
+
+    .section-card,
+    .form-card {
+        padding: 20px;
+    }
+
+    .amount {
+        font-size: 42px;
+    }
+}
+
+/* 安全区域适配 */
+@supports (padding: max(0px)) {
+    body {
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+    }
+}
+
+/* 深色模式支持（可选） */
+@media (prefers-color-scheme: dark) {
+    /* 保持浅色主题以确保温暖、专业的视觉效果 */
+}
+
+/* 微信浏览器特殊处理 */
+body.wechat-browser {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* 可爱风格动画效果 */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(0.8);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.2;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.1;
+    }
+}
+
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(1.1);
+    }
+    45% {
+        transform: scale(1);
+    }
+    60% {
+        transform: scale(1.1);
+    }
+    80% {
+        transform: scale(1);
+    }
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 2px 8px rgba(255, 107, 166, 0.2);
+    }
+    to {
+        text-shadow: 0 2px 16px rgba(255, 107, 166, 0.4), 0 0 20px rgba(255, 107, 166, 0.2);
+    }
+}
+
+@keyframes wiggle {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(3deg);
+    }
+    75% {
+        transform: rotate(-3deg);
+    }
+}
+
+/* 触摸反馈优化 */
+@media (hover: none) and (pointer: coarse) {
+    .nav-button:active,
+    .radio-option:active {
+        transform: scale(0.95);
+    }
+
+    .cute-btn:active {
+        transform: translateY(-1px) scale(0.98);
+    }
+}

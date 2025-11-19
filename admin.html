@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>51talk 用户访谈会 - 后台管理</title>
+    <link rel="stylesheet" href="admin-style.css">
+    <!-- 引入Excel导出库 -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header class="admin-header">
+        <div class="header-content">
+            <img src="logo.png" alt="51talk Logo" class="logo">
+            <h1 class="page-title">用户访谈会报名管理</h1>
+            <div class="header-stats">
+                <span class="stats-item">
+                    <span class="stats-number" id="totalCount">0</span>
+                    <span class="stats-label">总报名数</span>
+                </span>
+                <span class="stats-item">
+                    <span class="stats-number" id="amCount">0</span>
+                    <span class="stats-label">上午场</span>
+                </span>
+                <span class="stats-item">
+                    <span class="stats-number" id="pmCount">0</span>
+                    <span class="stats-label">下午场</span>
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main class="admin-main">
+        <!-- 统计图表区域 -->
+        <div class="stats-section">
+            <div class="stats-chart-container">
+                <h3 class="chart-title">参与人数统计</h3>
+                <div class="chart-content">
+                    <div class="chart-wrapper">
+                        <canvas id="statsChart" width="300" height="200"></canvas>
+                    </div>
+                    <div class="chart-legend">
+                        <div class="legend-item">
+                            <div class="legend-color am-color"></div>
+                            <span class="legend-label">上午场</span>
+                            <span class="legend-value" id="amLegendCount">0</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color pm-color"></div>
+                            <span class="legend-label">下午场</span>
+                            <span class="legend-value" id="pmLegendCount">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="stats-summary">
+                <div class="summary-card">
+                    <div class="summary-icon">📊</div>
+                    <div class="summary-content">
+                        <h4>参与率</h4>
+                        <div class="summary-value" id="participationRate">0%</div>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-icon">🎯</div>
+                    <div class="summary-content">
+                        <h4>满员情况</h4>
+                        <div class="summary-value" id="fullCapacityStatus">未满员</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 操作工具栏 -->
+        <div class="toolbar">
+            <div class="toolbar-left">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="搜索用户称呼..." class="search-input">
+                    <button class="search-btn" id="searchBtn">
+                        <span class="search-icon">🔍</span>
+                    </button>
+                </div>
+                <select id="timeSlotFilter" class="filter-select">
+                    <option value="">全部时间段</option>
+                    <option value="AM">上午场 9:30-11:30</option>
+                    <option value="PM">下午场 14:00-16:00</option>
+                </select>
+                <select id="dateFilter" class="filter-select">
+                    <option value="">全部日期</option>
+                    <option value="today">今天</option>
+                    <option value="yesterday">昨天</option>
+                    <option value="week">最近7天</option>
+                </select>
+            </div>
+            <div class="toolbar-right">
+                <button class="btn btn-refresh" id="refreshBtn">
+                    <span class="btn-icon">🔄</span>
+                    刷新数据
+                </button>
+                <button class="btn btn-export" id="exportBtn">
+                    <span class="btn-icon">📊</span>
+                    导出Excel
+                </button>
+            </div>
+        </div>
+
+        <!-- 数据表格 -->
+        <div class="table-container">
+            <table class="data-table" id="dataTable">
+                <thead>
+                    <tr>
+                        <th class="sortable" data-field="id">
+                            <span>序号</span>
+                            <span class="sort-icon">↕</span>
+                        </th>
+                        <th class="sortable" data-field="user_name">
+                            <span>用户称呼</span>
+                            <span class="sort-icon">↕</span>
+                        </th>
+                        <th class="sortable" data-field="selected_slot">
+                            <span>时间段</span>
+                            <span class="sort-icon">↕</span>
+                        </th>
+                        <th class="sortable" data-field="submit_time">
+                            <span>提交时间</span>
+                            <span class="sort-icon">↕</span>
+                        </th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- 数据将通过JavaScript动态加载 -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 空数据提示 -->
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <div class="empty-icon">📋</div>
+            <h3 class="empty-title">暂无报名数据</h3>
+            <p class="empty-description">还没有用户提交报名信息</p>
+        </div>
+
+        <!-- 分页控件 -->
+        <div class="pagination" id="pagination">
+            <div class="pagination-info">
+                <span>显示 <span id="showingFrom">0</span> - <span id="showingTo">0</span> 条，共 <span id="totalRecords">0</span> 条</span>
+            </div>
+            <div class="pagination-controls">
+                <button class="page-btn" id="prevBtn" disabled>上一页</button>
+                <div class="page-numbers" id="pageNumbers"></div>
+                <button class="page-btn" id="nextBtn" disabled>下一页</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- 加载状态 -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p>加载数据中...</p>
+    </div>
+
+    <!-- 详情弹窗 -->
+    <div class="modal-overlay" id="detailModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>用户详情</h3>
+                <button class="close-btn" id="closeDetailBtn">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="detail-item">
+                    <label>序号：</label>
+                    <span id="detailId">-</span>
+                </div>
+                <div class="detail-item">
+                    <label>用户称呼：</label>
+                    <span id="detailName">-</span>
+                </div>
+                <div class="detail-item">
+                    <label>选择时间段：</label>
+                    <span id="detailTimeSlot">-</span>
+                </div>
+                <div class="detail-item">
+                    <label>提交时间：</label>
+                    <span id="detailSubmitTime">-</span>
+                </div>
+                <div class="detail-item">
+                    <label>IP地址：</label>
+                    <span id="detailIP">-</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 确认弹窗 -->
+    <div class="modal-overlay" id="confirmModal" style="display: none;">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h3>确认导出</h3>
+            </div>
+            <div class="modal-body">
+                <p id="confirmMessage">确定要导出数据吗？</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelBtn">取消</button>
+                <button class="btn btn-primary" id="confirmBtn">确定</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 删除确认弹窗 -->
+    <div class="modal-overlay" id="deleteModal" style="display: none;">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h3>确认删除</h3>
+            </div>
+            <div class="modal-body">
+                <p id="deleteMessage">确定要删除这条报名记录吗？此操作不可撤销。</p>
+                <div class="delete-user-info">
+                    <strong>用户称呼：</strong>
+                    <span id="deleteUserName">-</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelDeleteBtn">取消</button>
+                <button class="btn btn-danger" id="confirmDeleteBtn">删除</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html>
